@@ -8,9 +8,13 @@ layout:
 projectName: app-cleanup-operator
 repo: github.com/sqaisar/app-cleanup-operator
 resources:
-- controller: true
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
   domain: app-cleanup.io
-  group: argoproj.io
-  kind: Application
+  group: cleanup.io
+  kind: AppCleanup
+  path: github.com/sqaisar/app-cleanup-operator/api/v1alpha1
   version: v1alpha1
 version: "3"

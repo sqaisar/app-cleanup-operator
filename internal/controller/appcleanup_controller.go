@@ -19,23 +19,28 @@ package controller
 import (
 	"context"
 	"fmt"
-
+	"github.com/sqaisar/app-cleanup-operator/internal/utils"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
+
+	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
-// ApplicationReconciler reconciles Application objects
-type ApplicationReconciler struct {
+// AppCleanupReconciler reconciles a AppCleanup object
+type AppCleanupReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 }
+
+// +kubebuilder:rbac:groups=cleanup.io.app-cleanup.io,resources=appcleanups,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=cleanup.io.app-cleanup.io,resources=appcleanups/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=cleanup.io.app-cleanup.io,resources=appcleanups/finalizers,verbs=update
 
 // +kubebuilder:rbac:groups=argoproj.io,resources=applications,verbs=get;list;watch
 // +kubebuilder:rbac:groups=argoproj.io,resources=applications/finalizers,verbs=update
@@ -46,7 +51,7 @@ const (
 	argoAppGVK         = "argoproj.io/v1alpha1, Kind=Application"
 )
 
-func (r *ApplicationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *AppCleanupReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)
 	logger.Info("Starting reconciliation", "request", req)
 
@@ -68,7 +73,7 @@ func (r *ApplicationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	}
 
 	// Check deletion and finalizer presence
-	if app.GetDeletionTimestamp().IsZero() || !hasFinalizer(app.GetFinalizers(), namespaceFinalizer) {
+	if app.GetDeletionTimestamp().IsZero() || !utils.HasFinalizer(app.GetFinalizers(), namespaceFinalizer) {
 		logger.Info("Skipping - no finalizer present or not in deletion")
 		return ctrl.Result{}, nil
 	}
@@ -88,7 +93,7 @@ func (r *ApplicationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	}
 
 	// Remove finalizer
-	finalizers := removeString(app.GetFinalizers(), namespaceFinalizer)
+	finalizers := utils.RemoveString(app.GetFinalizers(), namespaceFinalizer)
 	app.SetFinalizers(finalizers)
 	if err := r.Update(ctx, app); err != nil {
 		return ctrl.Result{}, fmt.Errorf("failed to remove finalizer: %v", err)
@@ -98,27 +103,7 @@ func (r *ApplicationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	return ctrl.Result{}, nil
 }
 
-// Helper functions
-func hasFinalizer(finalizers []string, target string) bool {
-	for _, f := range finalizers {
-		if f == target {
-			return true
-		}
-	}
-	return false
-}
-
-func removeString(slice []string, s string) []string {
-	result := []string{}
-	for _, item := range slice {
-		if item != s {
-			result = append(result, item)
-		}
-	}
-	return result
-}
-
-func (r *ApplicationReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *AppCleanupReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&unstructured.Unstructured{
 			Object: map[string]interface{}{

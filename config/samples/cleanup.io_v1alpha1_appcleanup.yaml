@@ -1,0 +1,9 @@
+apiVersion: cleanup.io.app-cleanup.io/v1alpha1
+kind: AppCleanup
+metadata:
+  labels:
+    app.kubernetes.io/name: app-cleanup-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: appcleanup-sample
+spec:
+  # TODO(user): Add fields here

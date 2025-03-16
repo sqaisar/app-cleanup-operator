@@ -31,6 +31,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
+
+	cleanupiov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -57,12 +59,15 @@ var _ = BeforeSuite(func() {
 	ctx, cancel = context.WithCancel(context.TODO())
 
 	var err error
+	err = cleanupiov1alpha1.AddToScheme(scheme.Scheme)
+	Expect(err).NotTo(HaveOccurred())
+
 	// +kubebuilder:scaffold:scheme
 
 	By("bootstrapping test environment")
 	testEnv = &envtest.Environment{
 		CRDDirectoryPaths:     []string{filepath.Join("..", "..", "config", "crd", "bases")},
-		ErrorIfCRDPathMissing: false,
+		ErrorIfCRDPathMissing: true,
 	}
 
 	// Retrieve the first found binary directory to allow running tests from IDEs

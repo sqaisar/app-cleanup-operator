@@ -26,3 +26,29 @@ rules:
   - applications/finalizers
   verbs:
   - update
+- apiGroups:
+  - cleanup.io.app-cleanup.io
+  resources:
+  - appcleanups
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - cleanup.io.app-cleanup.io
+  resources:
+  - appcleanups/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - cleanup.io.app-cleanup.io
+  resources:
+  - appcleanups/status
+  verbs:
+  - get
+  - patch
+  - update
