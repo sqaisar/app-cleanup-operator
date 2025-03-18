@@ -37,8 +37,8 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
-	"github.com/sqaisar/app-cleanup-operator/internal/controller"
+	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/argo/v1alpha1"
+	"github.com/sqaisar/app-cleanup-operator/internal/controller/argo"
 	// +kubebuilder:scaffold:imports
 )
 

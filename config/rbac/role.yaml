@@ -5,6 +5,14 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - delete
+  - get
+  - list
+- apiGroups:
   - argo.app-cleanup.io
   resources:
   - deployments
@@ -32,4 +40,18 @@ rules:
   verbs:
   - get
   - patch
+  - update
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications/finalizers
+  verbs:
   - update

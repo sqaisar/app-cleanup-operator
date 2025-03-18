@@ -5,6 +5,7 @@
 domain: app-cleanup.io
 layout:
 - go.kubebuilder.io/v4
+multigroup: true
 projectName: app-cleanup-operator
 repo: github.com/sqaisar/app-cleanup-operator
 resources:
@@ -15,7 +16,7 @@ resources:
   domain: app-cleanup.io
   group: argo
   kind: Namespace
-  path: github.com/sqaisar/app-cleanup-operator/api/v1alpha1
+  path: github.com/sqaisar/app-cleanup-operator/api/argo/v1alpha1
   version: v1alpha1
 - api:
     crdVersion: v1
@@ -24,6 +25,6 @@ resources:
   domain: app-cleanup.io
   group: argo
   kind: Deployment
-  path: github.com/sqaisar/app-cleanup-operator/api/v1alpha1
+  path: github.com/sqaisar/app-cleanup-operator/api/argo/v1alpha1
   version: v1alpha1
 version: "3"

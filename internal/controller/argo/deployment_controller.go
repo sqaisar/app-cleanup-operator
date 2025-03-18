@@ -24,7 +24,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
 
-	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
+	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/argo/v1alpha1"
 )
 
 // DeploymentReconciler reconciles a Deployment object

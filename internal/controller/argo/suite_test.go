@@ -32,7 +32,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
+	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/argo/v1alpha1"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -66,7 +66,10 @@ var _ = BeforeSuite(func() {
 
 	By("bootstrapping test environment")
 	testEnv = &envtest.Environment{
-		CRDDirectoryPaths:     []string{filepath.Join("..", "..", "config", "crd", "bases")},
+		CRDDirectoryPaths: []string{
+			filepath.Join("..", "..", "..", "config", "crd", "bases"),
+			filepath.Join("..", "..", "..", "test", "crds"),
+		},
 		ErrorIfCRDPathMissing: true,
 	}
 
