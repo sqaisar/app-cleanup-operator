@@ -1,0 +1,31 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  semantic-release:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # needed to write GitHub releases
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # or latest LTS version
+
+      - name: Install semantic-release
+        run: npm install -g semantic-release @semantic-release/git @semantic-release/changelog
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        run: semantic-release
