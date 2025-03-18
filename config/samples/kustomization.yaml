@@ -1,4 +1,5 @@
 ## Append samples of your project ##
 resources:
-- cleanup.io_v1alpha1_appcleanup.yaml
+- argo_v1alpha1_namespace.yaml
+- argo_v1alpha1_deployment.yaml
 # +kubebuilder:scaffold:manifestskustomizesamples

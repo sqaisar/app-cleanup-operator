@@ -27,10 +27,10 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	cleanupiov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
+	argov1alpha1 "github.com/sqaisar/app-cleanup-operator/api/v1alpha1"
 )
 
-var _ = Describe("AppCleanup Controller", func() {
+var _ = Describe("Namespace Controller", func() {
 	Context("When reconciling a resource", func() {
 		const resourceName = "test-resource"
 
@@ -40,13 +40,13 @@ var _ = Describe("AppCleanup Controller", func() {
 			Name:      resourceName,
 			Namespace: "default", // TODO(user):Modify as needed
 		}
-		appcleanup := &cleanupiov1alpha1.AppCleanup{}
+		namespace := &argov1alpha1.Namespace{}
 
 		BeforeEach(func() {
-			By("creating the custom resource for the Kind AppCleanup")
-			err := k8sClient.Get(ctx, typeNamespacedName, appcleanup)
+			By("creating the custom resource for the Kind Namespace")
+			err := k8sClient.Get(ctx, typeNamespacedName, namespace)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &cleanupiov1alpha1.AppCleanup{
+				resource := &argov1alpha1.Namespace{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
@@ -59,16 +59,16 @@ var _ = Describe("AppCleanup Controller", func() {
 
 		AfterEach(func() {
 			// TODO(user): Cleanup logic after each test, like removing the resource instance.
-			resource := &cleanupiov1alpha1.AppCleanup{}
+			resource := &argov1alpha1.Namespace{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 
-			By("Cleanup the specific resource instance AppCleanup")
+			By("Cleanup the specific resource instance Namespace")
 			Expect(k8sClient.Delete(ctx, resource)).To(Succeed())
 		})
 		It("should successfully reconcile the resource", func() {
 			By("Reconciling the created resource")
-			controllerReconciler := &AppCleanupReconciler{
+			controllerReconciler := &NamespaceReconciler{
 				Client: k8sClient,
 				Scheme: k8sClient.Scheme(),
 			}

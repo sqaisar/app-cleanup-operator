@@ -4,20 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.17.2
-  name: appcleanups.cleanup.io.app-cleanup.io
+  name: deployments.argo.app-cleanup.io
 spec:
-  group: cleanup.io.app-cleanup.io
+  group: argo.app-cleanup.io
   names:
-    kind: AppCleanup
-    listKind: AppCleanupList
-    plural: appcleanups
-    singular: appcleanup
+    kind: Deployment
+    listKind: DeploymentList
+    plural: deployments
+    singular: deployment
   scope: Namespaced
   versions:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: AppCleanup is the Schema for the appcleanups API.
+        description: Deployment is the Schema for the deployments API.
         properties:
           apiVersion:
             description: |-
@@ -37,15 +37,15 @@ spec:
           metadata:
             type: object
           spec:
-            description: AppCleanupSpec defines the desired state of AppCleanup.
+            description: DeploymentSpec defines the desired state of Deployment.
             properties:
               foo:
-                description: Foo is an example field of AppCleanup. Edit appcleanup_types.go
+                description: Foo is an example field of Deployment. Edit deployment_types.go
                   to remove/update
                 type: string
             type: object
           status:
-            description: AppCleanupStatus defines the observed state of AppCleanup.
+            description: DeploymentStatus defines the observed state of Deployment.
             type: object
         type: object
     served: true

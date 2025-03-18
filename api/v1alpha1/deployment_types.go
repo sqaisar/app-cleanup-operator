@@ -23,17 +23,17 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// AppCleanupSpec defines the desired state of AppCleanup.
-type AppCleanupSpec struct {
+// DeploymentSpec defines the desired state of Deployment.
+type DeploymentSpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Foo is an example field of AppCleanup. Edit appcleanup_types.go to remove/update
+	// Foo is an example field of Deployment. Edit deployment_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 }
 
-// AppCleanupStatus defines the observed state of AppCleanup.
-type AppCleanupStatus struct {
+// DeploymentStatus defines the observed state of Deployment.
+type DeploymentStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -41,24 +41,24 @@ type AppCleanupStatus struct {
 // +kubebuilder:object:root=true
 // +kubebuilder:subresource:status
 
-// AppCleanup is the Schema for the appcleanups API.
-type AppCleanup struct {
+// Deployment is the Schema for the deployments API.
+type Deployment struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   AppCleanupSpec   `json:"spec,omitempty"`
-	Status AppCleanupStatus `json:"status,omitempty"`
+	Spec   DeploymentSpec   `json:"spec,omitempty"`
+	Status DeploymentStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// AppCleanupList contains a list of AppCleanup.
-type AppCleanupList struct {
+// DeploymentList contains a list of Deployment.
+type DeploymentList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []AppCleanup `json:"items"`
+	Items           []Deployment `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&AppCleanup{}, &AppCleanupList{})
+	SchemeBuilder.Register(&Deployment{}, &DeploymentList{})
 }
