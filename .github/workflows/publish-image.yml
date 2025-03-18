@@ -4,6 +4,11 @@ on:
   release:
     types: [published]
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build-and-push:
     name: Build and Push Docker Image
