@@ -34,3 +34,27 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: semantic-release
+
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v2
+        with:
+          kustomize-version: "5.3.0"
+
+      - name: Retrieve semantic-release latest version tag
+        id: get_tag
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          echo "latest_tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Update manifest image tag using latest semantic-release version
+        run: |
+          kustomize edit set image controller=sqaisar/app-cleanup-operator:${{ steps.get_tag.outputs.latest_tag }}
+          kustomize build config/overlays/production > operator.yaml
+
+      - name: Upload Release Asset to Semantic Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        with:
+          tag_name: ${{ steps.get_tag.outputs.latest_tag }}
+          files: operator.yaml
