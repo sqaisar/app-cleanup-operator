@@ -1,10 +1,75 @@
-# app-cleanup-operator
-// TODO(user): Add simple overview of use/purpose
+# App Cleanup Operator
+[![Release](https://github.com/sqaisar/app-cleanup-operator/actions/workflows/publish-image.yml/badge.svg)](https://github.com/sqaisar/app-cleanup-operator/actions/workflows/publish-image.yml)
 
-## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+This Kubernetes operator performs cleanup tasks automatically, helping simplify maintenance and operational tasks within your cluster.
 
-## Getting Started
+---
+
+## 🚀 Installation Guide
+
+Follow these simple steps to install **App Cleanup Operator** into your Kubernetes cluster.
+
+### 🔧 Install with Kubectl
+
+Define the desired Controller version and execute the deployment manifest via `kubectl`:
+
+```bash
+# Define the operator version you want to install (replace this with your desired version)
+CONTROLLER_VERSION=v1.0.5
+
+# Install the App Cleanup Operator into your Kubernetes cluster
+kubectl apply -f https://github.com/sqaisar/app-cleanup-operator/releases/download/${CONTROLLER_VERSION}/operator.yaml
+```
+
+**Explanation:**
+- `CONTROLLER_VERSION` sets the specific version of the controller you desire.
+- The `kubectl apply` downloads and applies the operator's YAML manifest directly from official releases.
+
+---
+
+## ✅ Verifying the Installation
+
+Check clearly if the operator pods are running successfully after installation:
+
+```bash
+kubectl get pods -n <namespace>
+```
+
+All pods related to the operator should display status `Running` and ready.
+
+---
+
+## 📚 Updating the Installed Version
+
+Check the available versions at [GitHub Releases](https://github.com/sqaisar/app-cleanup-operator/releases).
+
+When updating clearly define your new `CONTROLLER_VERSION` and re-apply manifests as shown:
+
+```bash
+# Define new version
+CONTROLLER_VERSION=<new-version>
+
+# Upgrade the operator
+kubectl apply -f https://github.com/sqaisar/app-cleanup-operator/releases/download/${CONTROLLER_VERSION}/operator.yaml
+```
+
+---
+
+## 🛠️ Customizing and Configuring
+
+(List clearly any additional options or configuration tweaks users might prefer or require here.)
+
+---
+
+## 🙋 Getting Help
+
+If you encounter issues or need guidance:
+- Open an Issue clearly at the GitHub repository: [Issues Page](https://github.com/sqaisar/app-cleanup-operator/issues).
+- Consult clearly documented troubleshooting steps in this README.
+
+---
+
+## Contributing guidelines
 
 ### Prerequisites
 - go version v1.23.0+
