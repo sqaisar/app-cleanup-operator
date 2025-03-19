@@ -47,6 +47,7 @@ jobs:
           echo "latest_tag=$TAG" >> $GITHUB_OUTPUT
 
       - name: Update manifest image tag using latest semantic-release version
+        working-directory: config/overlays/production
         run: |
           kustomize edit set image controller=sqaisar/app-cleanup-operator:${{ steps.get_tag.outputs.latest_tag }}
           kustomize build config/overlays/production > operator.yaml
