@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/sqaisar/app-cleanup-operator/compare/v1.0.3...v1.0.4) (2025-03-19)
+
+
+### Bug Fixes
+
+* force-release empty commit ([02dce07](https://github.com/sqaisar/app-cleanup-operator/commit/02dce079407b0fecc0e13c8f5fb37c82feb94b5d))
+
 ## [1.0.3](https://github.com/sqaisar/app-cleanup-operator/compare/v1.0.2...v1.0.3) (2025-03-19)
 
 
